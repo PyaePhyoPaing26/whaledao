@@ -1,0 +1,93 @@
+import discord
+import random
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Access environment variables
+DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
+
+# Create an instance of a client
+intents = discord.Intents.default()
+intents.message_content = True
+client = discord.Client(intents=intents)
+
+# List of possible morning replies
+gm_responses = [
+    "GM! Ready to crush the day?",
+    "Good morning! Wishing you a day filled with joy and success!",
+    "Morning! Hope you have an amazing day!",
+    "Good day! May all your plans succeed today!",
+    "Morning! Coffee's on?",
+    "Good morning! Beautiful day, isn't it?",
+    "Morning! Hope you're having a great day so far.",
+    "Good morning! How are you today?",
+    "Morning! Wishing you a fantastic day ahead!",
+    "Morning! It's always great to start the day with a smile!",
+    "Morning! Did you sleep well?",
+    "Morning! Sunshine and smiles all around!",
+    "Good morning! It's a brand new day, full of possibilities!",
+    "Morning! Sending you positive vibes to start the day!",
+    "Good morning! The day is young, and so are you!",
+    "Morning! Did you have a good night's rest?",
+    "Good morning! I hope you're feeling refreshed and ready to go!",
+    "Morning! Rise and shine, it's a new day!",
+    "Good morning! What's the plan for today?",
+    "Morning! May today be your best day yet!"
+]
+
+# List of possible night replies
+gn_responses = [
+    "Good night! Sweet dreams!",
+    "Nighty night! Sleep tight!",
+    "Good night! Hope you have a restful sleep.",
+    "Sweet dreams! See you tomorrow!",
+    "Good night! Dream big!",
+    "Night! Don't let the bedbugs bite!",
+    "Good night! Rest well!",
+    "Sleep well! Have a great night!",
+    "Good night! Catch you later!",
+    "Good night! Sleep peacefully.",
+    "Good night! Wishing you a relaxing sleep.",
+    "Night! Time to recharge.",
+    "Good night! Hope you have a calm and restful night.",
+    "Sweet dreams! Have a great night!",
+    "Good night! See you in the morning!",
+    "Good night! May your dreams be sweet and peaceful.",
+    "Good night! Rest and recharge for tomorrow.",
+    "Good night! Have a great sleep.",
+    "Night! Hope you have a wonderful night's sleep.",
+    "Good night! Enjoy your sleep.",
+    "Good night! Rest up for a great day tomorrow.",
+    "Night! Hope you wake up feeling refreshed.",
+    "Good night! May you sleep well and dream of happiness.",
+    "Good night! Have a peaceful sleep.",
+    "Sweet dreams! Until tomorrow."
+]
+
+@client.event
+async def on_ready():
+    print(f'We have logged in as {client.user}')
+
+@client.event
+async def on_message(message):
+    # Ignore messages sent by the bot itself
+    if message.author == client.user:
+        return
+
+    # Check if the message content contains "gm" (case insensitive)
+    if "gm" in message.content.lower():
+        # Send one random reply for gm, mentioning the user
+        reply = random.choice(gm_responses)
+        await message.channel.send(f"{message.author.mention} {reply}")
+
+    # Check if the message content contains "gn" (case insensitive)
+    elif "gn" in message.content.lower():
+        # Send one random reply for gn, mentioning the user
+        reply = random.choice(gn_responses)
+        await message.channel.send(f"{message.author.mention} {reply}")
+
+# Replace 'your-bot-token' with your actual bot token
+client.run(os.getenv('MTI2MjA5NjU1ODgzMzQwNjA0Mg.GRZt0M.0aRyqnfRapoz2gMwAQD9OnrCTVVflS-gxRAoOg'))
